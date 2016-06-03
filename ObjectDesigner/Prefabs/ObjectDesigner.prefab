@@ -39,15 +39,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b808876f679f43e49843160fe152758c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_nameActivity: AtividadeCannon
-  m_amountObject: 6
-  m_assetActivity: {fileID: 4900000, guid: f59677a34f1254740a3cef48e5b262d3, type: 3}
+  m_nameActivity: 
+  m_amountObject: 0
+  m_assetActivity: {fileID: 0}
   m_object:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
 --- !u!1001 &100100000
 Prefab:

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using LitJson;
@@ -8,9 +6,9 @@ using LitJson;
 public class ObjectDesigner : MonoBehaviour
 {
 
-    private const string PATH = "/Object Designer/Activity Resource/{0}.txt";
+    private const string PATH = "/GlobalTools/ObjectDesigner/Activity Resource/{0}.json";
 
-    public string m_nameActivity = "none";
+    public string m_nameActivity = "NONE";
     public int m_amountObject;
 
     public TextAsset m_assetActivity;
@@ -34,22 +32,21 @@ public class ObjectDesigner : MonoBehaviour
 
             ///Transforma a informação do json e alimenta a lista de teclados virtuais configurados
             if (_text != null)
-                this.m_activityDesigner = new List<ResourceObjectDesigner>(JsonMapper.ToObject<List<ResourceObjectDesigner>>(_text));
+                m_activityDesigner = new List<ResourceObjectDesigner>(JsonMapper.ToObject<List<ResourceObjectDesigner>>(_text));
 
 
             /// Load objects ref
-            this.m_amountObject = this.m_activityDesigner[0].m_structObjectDesigner.Count;
-            this.m_nameActivity = _assetText.name;
-            this.m_object = new Transform[this.m_amountObject];
+            m_amountObject = m_activityDesigner[0].m_structObjectDesigner.Count;
+            m_nameActivity = _assetText.name;
+            m_object = new Transform[m_amountObject];
 
-            for (int i = 0; i < this.m_amountObject; i++)
+            for (int i = 0; i < m_amountObject; i++)
             {
-                
-                GameObject obj = GameObject.Find(this.m_activityDesigner[0].m_structObjectDesigner[i].m_nameRef).gameObject;
-                print(obj.name);
-                this.m_object[i] = obj.transform;
-            }
 
+                GameObject obj = GameObject.Find(m_activityDesigner[0].m_structObjectDesigner[i].m_nameRef).gameObject;
+                print(obj.name);
+                m_object[i] = obj.transform;
+            }
             return true;
         }
         catch
@@ -81,7 +78,6 @@ public class ObjectDesigner : MonoBehaviour
             }
             resource.m_structObjectDesigner.Add(_object);
         }
-
         m_activityDesigner.Add(resource);
     }
 
@@ -93,7 +89,7 @@ public class ObjectDesigner : MonoBehaviour
     public bool createFile()
     {
 #if UNITY_EDITOR
-        string path = string.Format(Application.dataPath + PATH, m_nameActivity);
+        string path = string.Format(Application.dataPath + "/GlobalTools/ObjectDesigner/Activity Resource/{0}.json", m_nameActivity == "" ? "None" : m_nameActivity);
 
         if (!File.Exists(path))
             File.Create(path);
@@ -108,7 +104,7 @@ public class ObjectDesigner : MonoBehaviour
     {
 #if UNITY_EDITOR
 
-        string path = string.Format(Application.dataPath + "/Object Designer/Activity Resource/{0}.txt", m_nameActivity);
+        string path = string.Format(Application.dataPath + PATH, m_assetActivity.name);
         if (File.Exists(path))
         {
             try

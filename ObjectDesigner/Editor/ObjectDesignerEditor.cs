@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
 
 [CustomEditor(typeof(ObjectDesigner))]
 public class ObjectDesignerEditor : Editor
@@ -33,7 +31,7 @@ public class ObjectDesignerEditor : Editor
 
         if (GUILayout.Button("Build"))
         {
-            script.m_object = new Transform[(int)script.m_amountObject];
+            script.m_object = new Transform[script.m_amountObject];
         }
 
         if (GUILayout.Button("Clear"))
@@ -46,26 +44,19 @@ public class ObjectDesignerEditor : Editor
 
         EditorGUILayout.EndHorizontal();
 
-
-        int countObject = 0;
-
         if (script.m_object != null)
         {
-            foreach (Transform obj in script.m_object)
+            for (int i = 0; i < script.m_object.Length; i++)
             {
                 EditorGUILayout.BeginHorizontal();
 
-                script.m_object[countObject] = EditorGUILayout.ObjectField(script.m_object[countObject], typeof(Transform), true) as Transform;
+                script.m_object[i] = EditorGUILayout.ObjectField(script.m_object[i], typeof(Transform), true) as Transform;
 
                 EditorGUILayout.EndHorizontal();
-
-                countObject++;
             }
-
         }
 
         Space(2);
-
         EditorGUILayout.BeginHorizontal();
 
         if (GUILayout.Button("Load Arquivo"))
@@ -96,7 +87,9 @@ public class ObjectDesignerEditor : Editor
         {
             bool createFile = script.createFile();
             if (createFile)
+            {
                 EditorUtility.DisplayDialog("Arquivo", "Arquivo Criado com Sucesso", "Prosseguir");
+            }
             else
             {
                 EditorUtility.DisplayDialog("Arquivo", "Arquivo Ja existe", "Prosseguir");
@@ -110,14 +103,18 @@ public class ObjectDesignerEditor : Editor
             bool booleanSaveFile;
             booleanSaveFile = script.saveFileActivity();
             if (booleanSaveFile)
+            {
                 EditorUtility.DisplayDialog("Arquivo", "Arquivo Salvado com Sucesso", "Prosseguir");
+            }
             else
             {
-                if (EditorUtility.DisplayDialog("Arquivo", "Nao foi possivel salvar o arquivo, primeiro deve criar um arquivo, deseja criar o arquivo", "Sim", "Nao"))
+                if (EditorUtility.DisplayDialog("Arquivo", "Nao foi possivel salvar o arquivo", "Ok"))
                 {
-                    bool createFile = script.createFile();
-                    if (createFile)
-                        EditorUtility.DisplayDialog("Arquivo", "Arquivo Criado com Sucesso", "Prosseguir");
+                    //bool createFile = script.createFile();
+                    //if (createFile)
+                    //{
+                    //    EditorUtility.DisplayDialog("Arquivo", "Arquivo Criado com Sucesso", "Prosseguir");
+                    //}
                 }
             }
         }
@@ -156,7 +153,7 @@ public class ObjectDesignerEditor : Editor
                         countObjectPerActivity++;
                         EditorGUILayout.BeginHorizontal();
 
-                        EditorGUILayout.LabelField(script.m_nameActivity + " " + countObjectPerActivity.ToString());
+                        EditorGUILayout.LabelField(activityObjectDesigner + " " + countObjectPerActivity.ToString());
 
                         if (GUILayout.Button("Delete Objeto"))
                         {
